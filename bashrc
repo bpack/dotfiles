@@ -1,7 +1,10 @@
-
-export PATH=/usr/local/opt/python/libexec/bin:$PATH:./node_modules/.bin
+export TOOLS_HOME=~/Code/tools
 export EDITOR=/usr/local/bin/vim
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
+export JAVA_HOME=$(/usr/libexec/java_home)
+export OKTA_AWS_HOME=$TOOLS_HOME/okta-aws-cli-assume-role/out/
+
+export PATH=/usr/local/opt/python/libexec/bin:$PATH:./node_modules/.bin:~/Code/bin
 
 # Aliases
 
@@ -11,12 +14,22 @@ alias la='ls -a'
 alias vi=/usr/local/bin/vim
 alias vim=/usr/local/bin/vim
 
-
 # Functions
 
 mcd() {
     mkdir -p $1
     cd $1
+}
+
+awslogin() {
+    cwd=`pwd`
+    cd $OKTA_AWS_HOME
+    ./awscli.command
+    cd $cwd
+}
+
+g() {
+    ./gradlew "$@"
 }
 
 _git_branch() {
