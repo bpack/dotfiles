@@ -10,10 +10,12 @@ mkdir -p $bdir
 cd $dir
 
 for file in $files; do
-    echo "Moving .$file from $HOME to $bdir"
-    mv ~/.$file $bdir
-    echo "Creating symlink to $file"
-    ln -s $dir/$file ~/.$file
-    echo 
+    if [ ! ~/.$file ]; then
+        echo "Moving .$file from $HOME to $bdir"
+        mv ~/.$file $bdir
+        echo "Creating symlink to $file"
+        ln -s $dir/$file ~/.$file
+        echo 
+    fi
 done
 
