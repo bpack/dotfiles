@@ -11,9 +11,9 @@ cd $dir
 
 for file in $files; do
     echo "Moving .$file from $HOME to $bdir"
-    echo "mv ~/.$file $bdir"
+    mv ~/.$file $bdir
     echo "Creating symlink to $file"
-    echo "ln -s $dir/$file ~/.$file"
+    ln -s $dir/$file ~/.$file
     echo 
 done
 
