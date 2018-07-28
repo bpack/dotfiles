@@ -1,0 +1,41 @@
+
+# vim: filetype=sh
+
+export EDITOR=/usr/local/bin/vim
+export GROOVY_HOME=/usr/local/opt/groovy/libexec
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+export PATH=/usr/local/opt/python/libexec/bin:$PATH:./node_modules/.bin:~/Code/bin
+
+alias vi=/usr/local/bin/vim
+alias vim=/usr/local/bin/vim
+
+export TOOLS_HOME=~/Code/tools
+export OKTA_AWS_HOME=$TOOLS_HOME/okta-aws-cli-assume-role/out/
+
+function awslogin() {
+    cwd=`pwd`
+    cd $OKTA_AWS_HOME
+    ./awscli.command
+    cd $cwd
+}
+
+function setjdk() {
+
+    if [ $# -ne 0 ]; then
+        remove_from_path '/System/Library/Frameworks/JavaVM.framework/Home/bin'
+        if [ -n "${JAVA_HOME+x}" ]; then
+            remove_from_path $JAVA_HOME
+        fi
+        export JAVA_HOME=`/usr/libexec/java_home -v $@`
+        export PATH=$JAVA_HOME/bin:$PATH
+    fi
+
+    echo JAVA_HOME set to $JAVA_HOME
+    java -version
+
+}
+
+function remove_from_path() {
+    export PATH=$(echo $PATH | sed -E -e "s;:$1;;" -e "s;$1:?;;")
+}

@@ -6,7 +6,7 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'altercation/vim-colors-solarized'
+"Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'xolox/vim-misc'
@@ -18,9 +18,9 @@ call vundle#end()
 
 filetype plugin indent on
 
-
 " --- Plugin configuration
 set tags=./tags;,~/.vimtags
+
 " Sensible defaults
 let g:easytags_events = ['BufReadPost', 'BufWritePost']
 let g:easytags_async = 1
@@ -32,7 +32,7 @@ let g:easytags_suppress_ctags_warning = 1
 " --- Standard configurations
 syntax enable
 set background=dark
-colorscheme solarized
+"colorscheme solarized
 
 set showcmd                      "Show command below status line
 
@@ -74,6 +74,16 @@ filetype on                      "Guess file type
 set backup                       "Create backup files
 set backupdir=~/.vim/backup      "Directory for backup files
 set directory=~/.vim/tmp         "Directory for swap files
+
+" --- Additional settings
+
+" Highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 " --- Commands
 " Use :C to clear highlighted search
