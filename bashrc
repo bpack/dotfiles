@@ -1,8 +1,14 @@
 # Aliases
 
 alias ls='ls -F'
-alias ll='ls -alF'
-alias la='ls -a'
+alias ll='ls -lF'
+alias la='ls -alF'
+
+alias py='python'
+
+export OSX_MAT_HOME=~/Code/tools/mat
+alias mat="${OSX_MAT_HOME}/mat.app/Contents/MacOS/MemoryAnalyzer -vmargs -Xmx7g -XX:-UseGCOverheadLimit"
+
 
 # Functions
 
@@ -52,12 +58,21 @@ function _virtualenv_info(){
     [[ -n "$venv" ]] && echo "(venv: $venv) "
 }
 
+function _aws_profile(){
+    local aws_prof=''
+    if [[ -n "$AWS_PROFILE" ]]; then
+        aws_prof="${AWS_PROFILE}"
+    fi
+    [[ -n "$aws_prof" ]] && echo "<aws: $aws_prof> "
+}
+
 function _prompt_command() {
     local BRANCH=`_git_branch`
     local LOAD=`uptime|awk '{min=NF-2;print $min}'`
     local VENV=`_virtualenv_info`
     local TIME='\t'
     local NEWLINE='\n'
+    local PROFILE=`_aws_profile`
 
     local GREEN="\[\033[0;32m\]"
     local CYAN="\[\033[0;36m\]"
@@ -70,7 +85,7 @@ function _prompt_command() {
 
     # return color to Terminal setting for text color
     local DEFAULT="\[\033[0;39m\]"
-    export PS1="\n[\!] \t ${RED}(${LOAD}) ${GREEN}\w\n${CYAN}${BRANCH}${RED}$VENV${DEFAULT}\$ "
+    export PS1="\n[\!] \t ${RED}(${LOAD}) ${GREEN}\w\n${BLUE}${PROFILE}${DEFAULT}${CYAN}${BRANCH}${RED}$VENV${DEFAULT}\$ "
 }
 
 PROMPT_COMMAND=_prompt_command
