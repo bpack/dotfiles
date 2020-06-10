@@ -6,9 +6,19 @@ alias la='ls -alF'
 
 alias py='python'
 
-export OSX_MAT_HOME=~/Code/tools/mat
-alias mat="${OSX_MAT_HOME}/mat.app/Contents/MacOS/MemoryAnalyzer -vmargs -Xmx7g -XX:-UseGCOverheadLimit"
 
+# Create a base64 encoded data URL from a file
+dataurl() {
+    local MIMETYPE=$(file --mime-type "$1" | cut -d ' ' -f2)
+    if [[ $MIMETYPE == "text/*" ]]; then
+        MIMETYPE="${MIMETYPE};charset=utf-8"
+    fi
+    echo "data:${MIMETYPE};base64,$(openssl base64 -in "$1" | tr -d '\n')"
+}
+
+unshorten() {
+    curl -sIL $1 | sed -n 's/Location: *//p'
+}
 
 # Functions
 
