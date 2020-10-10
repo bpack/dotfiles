@@ -20,7 +20,27 @@ unshorten() {
     curl -sIL $1 | sed -n 's/Location: *//p'
 }
 
+# https://meyerweb.com/eric/thoughts/2020/09/29/polite-bash-commands/
+please() {
+    if [ "$1" ]; then
+        sudo $@
+    else
+        sudo "$BASH" -c "$(history -p !!)"
+    fi
+}
+
 # Functions
+
+function cd
+{
+    if [ $# -eq 0 ]; then
+        pushd ~ > /dev/null
+    elif [ " $1" = " -" ]; then
+        pushd "$OLDPWD" > /dev/null
+    else
+        pushd "$@" > /dev/null
+    fi
+}
 
 function mcd() {
     mkdir -p $1

@@ -6,9 +6,11 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export JAVA_HOME=$(/usr/libexec/java_home)
 
 export PATH=/usr/local/opt/python/libexec/bin:$PATH:./node_modules/.bin:~/Code/bin
+export PATH="/usr/local/sbin:$PATH"
 
 export OSX_MAT_HOME=~/Code/tools/mat
 alias mat="${OSX_MAT_HOME}/mat.app/Contents/MacOS/MemoryAnalyzer -vmargs -Xmx7g -XX:-UseGCOverheadLimit"
+
 
 alias vi=/usr/local/bin/vim
 alias vim=/usr/local/bin/vim
